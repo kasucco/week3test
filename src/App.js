@@ -1,23 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
 
 function App() {
+  const [todo, setTodo] = useState("");
+  const [todos, setTodos] = useState([]);
+
+  const onChange = (event) => {
+    setTodo(event.target.value);
+  };
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+    if (todo === "") {
+      return;
+    }
+    setTodo("");
+    return setTodos((currentarray) => [todo, ...currentarray]);
+  };
+  console.log(todos);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <div className="input">
+        <form onSubmit={onSubmit}>
+          <input type="text" onChange={onChange} value={todo}></input>
+          <button>추가하기</button>
+        </form>
+      </div>
+      <div className="title">
+        <h2>Todo List</h2>
+      </div>
+      <div>
+        {todos.map((todo) => (
+          <div className="cardBox">{todo}</div>
+        ))}
+      </div>
     </div>
   );
 }
